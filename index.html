@@ -441,6 +441,104 @@
       padding: 28px 24px;
       font-size: 13px;
     }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(245,240,230,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 16px 0 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; color: var(--green); }
+    .mobile-menu a:hover { background: rgba(0,0,0,0.03); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      section { padding: 72px 24px; }
+      .hero-content { padding: 0 24px; }
+      .phil-top { gap: 32px; margin-bottom: 36px; }
+      .space-top { gap: 32px; }
+      .training-top { gap: 32px; }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 60px 20px; }
+      .hero-content { padding: 0 20px; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 0.95rem; }
+
+      .phil-top { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+      .phil-cards { grid-template-columns: 1fr; gap: 14px; }
+
+      .story-inner { grid-template-columns: 1fr; gap: 28px; }
+      .story-quote br { display: none; }
+
+      .space-top { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+      .photo-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+        gap: 10px;
+      }
+      .photo-grid .main { grid-row: auto; }
+      .photo-item img { height: 220px; }
+
+      .training-top { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--border); }
+      .step:nth-child(odd) { border-right: 1px solid var(--border); }
+      .step:nth-last-child(-n+2) { border-bottom: none; }
+
+      .contact .container { grid-template-columns: 1fr; gap: 32px; }
+      nav { padding: 0 20px; }
+    }
+
+    @media (max-width: 400px) {
+      .steps { grid-template-columns: 1fr; }
+      .step { border-right: none !important; }
+      .step:not(:last-child) { border-bottom: 1px solid var(--border); }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-outline { text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -457,9 +555,21 @@
         <li><a href="#story">소개</a></li>
         <li><a href="#space">공간</a></li>
         <li><a href="#contact">상담</a></li>
+        <li><a href="join.html" style="color:var(--green);font-weight:700;">원장님 가입안내</a></li>
       </ul>
+      <button class="hamburger" id="menuBtn" aria-label="메뉴">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#philosophy" onclick="closeMenu()">수업 철학</a>
+    <a href="#story" onclick="closeMenu()">소개</a>
+    <a href="#space" onclick="closeMenu()">공간</a>
+    <a href="#contact" onclick="closeMenu()">상담</a>
+    <a href="join.html">원장님 가입안내</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -618,6 +728,19 @@
   <footer>
     <p>© 2026 책통클럽 독서 공부방 · 송도 베르디움 더 퍼스트 113동 · 010-6553-2478</p>
   </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    function closeMenu() {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    }
+  </script>
 
 </body>
 </html>
